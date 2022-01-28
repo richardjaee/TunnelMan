@@ -1,22 +1,22 @@
-#include "StudentWorld.h"
+#include "MainWorld.h"
 #include <string>
 
 
 using namespace std;
 
-StudentWorld::StudentWorld(std::string assetDir)
+MainWorld::MainWorld(std::string assetDir)
 : GameWorld(assetDir){}
 
-GameWorld* createStudentWorld(string assetDir)
+GameWorld* createMainWorld(string assetDir)
 {
-	return new StudentWorld(assetDir);
+	return new MainWorld(assetDir);
 }
 
-// Students:  Add code to this file (if you wish), StudentWorld.h, Actor.h and Actor.cpp
+// Students:  Add code to this file (if you wish), MainWorld.h, Actor.h and Actor.cpp
 
 
 
-void StudentWorld::setDisplayText(){
+void MainWorld::setDisplayText(){
     int level = getLevel();
     int lives = getLives();
     int health = m_tunnelMan->getHP()* 10;
@@ -34,7 +34,7 @@ void StudentWorld::setDisplayText(){
     GameWorld::setGameStatText(s); // calls our provided GameWorld::setGameStatText
     
 }
-string StudentWorld::displayFormat(int level, int lives, int health, int squirts,int gold,int barrelsLeft, int  sonar,int score){
+string MainWorld::displayFormat(int level, int lives, int health, int squirts,int gold,int barrelsLeft, int  sonar,int score){
     
     stringstream s;
     
@@ -53,15 +53,15 @@ string StudentWorld::displayFormat(int level, int lives, int health, int squirts
     return s.str();
 }
 
-void StudentWorld::foundBarrel(){
+void MainWorld::foundBarrel(){
     m_barrels--; //decrements barrels needed
 }
 
-int StudentWorld::barrelsRemaining(){
+int MainWorld::barrelsRemaining(){
     return m_barrels; //returns the amount of barrels needed
 }
 
-void StudentWorld::sonarUse(int x, int y){
+void MainWorld::sonarUse(int x, int y){
     if (m_tunnelMan->remainingSonar() == 0){ //if there are no more sonar ammo, then return
         return;
     }
@@ -72,7 +72,7 @@ void StudentWorld::sonarUse(int x, int y){
    // m_tunnelMan->SonarAdd(-1);
 }
 
-void StudentWorld::shootWater(int x, int y){
+void MainWorld::shootWater(int x, int y){
     if (m_tunnelMan->remainingAmmo() == 0){ //if there is not more water ammo, then return
         return;
     }
@@ -86,7 +86,7 @@ void StudentWorld::shootWater(int x, int y){
      
 }
 
-bool StudentWorld::BoulderInWay(int x, int y) const{
+bool MainWorld::BoulderInWay(int x, int y) const{
   
     for (size_t i = 0; i < m_actor.size(); i++){ //checks every object in our vector
         
@@ -103,16 +103,16 @@ bool StudentWorld::BoulderInWay(int x, int y) const{
 }
 
 
-void StudentWorld::minusProtester(){
+void MainWorld::minusProtester(){
     m_protesters--; //decrement protester count
 }
 
-int StudentWorld::restTicks(){
+int MainWorld::restTicks(){
     int currlevel = getLevel();
     return max(0, 3 - currlevel/4); //return the restticks of the protesters based on the level we are on
 }
 
-int StudentWorld::init(){
+int MainWorld::init(){
     m_tunnelMan = new TunnelMan(this); //creates a new tunnelman
     m_ticks = 0; //initializes ticks to 0
     
@@ -190,7 +190,7 @@ int StudentWorld::init(){
     return GWSTATUS_CONTINUE_GAME;
 }
 
-void StudentWorld::spawnProtester(){
+void MainWorld::spawnProtester(){
     
     int T = max(25, 200 - (int)getLevel()); //calculate ticks needed before we spawn another protester
     int P = fmin(15, 2 + getLevel() * 1.5); //calculate the max amount of protesters we can have
@@ -210,7 +210,7 @@ void StudentWorld::spawnProtester(){
     m_ticksPassed++; //increment the amount of ticks passed
 }
 //done
-void StudentWorld::randomCoord(int &x, int&y){
+void MainWorld::randomCoord(int &x, int&y){
    
     if (m_actor.size() == 0){ //there are no other actors on the board
         x = (rand() % 59) + 1; //randomize x and y
@@ -234,11 +234,11 @@ void StudentWorld::randomCoord(int &x, int&y){
     }
 }
 
-int StudentWorld::move(){
+int MainWorld::move(){
     
     m_ticks++; //increments ticks
     spawnProtester(); //calls the spawnprotester method
-    StudentWorld::setDisplayText(); //calls the setDisplay method
+    MainWorld::setDisplayText(); //calls the setDisplay method
    // void waterPool(); //calls the waterpool method
     if (m_barrels == 0){ //we have found all of the barrels needed
         advanceToNextLevel();
@@ -282,16 +282,16 @@ int StudentWorld::move(){
 }
 
 
-TunnelMan* StudentWorld::getTunnelMan() const {
+TunnelMan* MainWorld::getTunnelMan() const {
     return m_tunnelMan;
 }
 
 
-int StudentWorld::grid(int x, int y){
+int MainWorld::grid(int x, int y){
     return mapGrid[x][y]; //return the value of the grid at this coord
 }
 
-void StudentWorld::cleanUp(){
+void MainWorld::cleanUp(){
     vector<Actor*>::iterator it; //create an iterator
     it = m_actor.begin(); //initialize the iterator
     while (it != m_actor.end()){ //delete all of the actors
@@ -310,7 +310,7 @@ void StudentWorld::cleanUp(){
 }
 
 
-StudentWorld::~StudentWorld(){
+MainWorld::~MainWorld(){
     delete m_tunnelMan; //clears the tunnelman
     
     vector<Actor*>::iterator it;
@@ -328,12 +328,12 @@ StudentWorld::~StudentWorld(){
 }
 
 
-void StudentWorld::EarthDelete(int x, int y){
+void MainWorld::EarthDelete(int x, int y){
     m_board[x][y]->setVisible(false); //calls the setVisible function and sets it to false
     m_board[x][y] = 0; //sets the location to 0
 }
 
-void StudentWorld::removeEarth(int x, int y){
+void MainWorld::removeEarth(int x, int y){
     for (int i = x; i <= x + 3; i++){
         
            for (int k = y; k <= y + 3; k++){
