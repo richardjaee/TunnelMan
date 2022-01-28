@@ -1,5 +1,5 @@
-#ifndef STUDENTWORLD_H_
-#define STUDENTWORLD_H_
+#ifndef MAINWORLD_H_
+#define MAINWORLD_H_
 
 #include "GameWorld.h"
 #include "GameConstants.h"
@@ -10,16 +10,16 @@
 #include <cmath>
 #include <sstream>
 #include <iomanip>
-// Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
-class StudentWorld : public GameWorld
+
+class MainWorld : public GameWorld
 {
 public:
     
     // NAME: Constructor
     // INPUT: assetDir string
     // OUTPUT: Nobe
-    // DESCRIPTION: Constructor for StudentWorld
-    StudentWorld(std::string assetDir);
+    // DESCRIPTION: Constructor for MainWorld
+    MainWorld(std::string assetDir);
     
     // NAME: init
     // INPUT: None
@@ -60,8 +60,8 @@ public:
     // NAME: Destructor
     // INPUT: None
     // OUTPUT: None
-    // DESCRIPTION: Destructor for StudentWorld
-    ~StudentWorld();
+    // DESCRIPTION: Destructor for MainWorld
+    ~MainWorld();
     
     // NAME: cleanUp
     // INPUT: None
@@ -149,4 +149,4 @@ private:
 };
 
 
-#endif // STUDENTWORLD_H_
+#endif // MAINWORLD_H_
